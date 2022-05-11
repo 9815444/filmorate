@@ -1,17 +1,22 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exceptions.ValidationException;
+import ru.yandex.practicum.filmorate.exceptions.UserValidationException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.validators.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ru.yandex.practicum.filmorate.validators.Validator.*;
+
 @RestController
 @RequestMapping("/")
+@Slf4j
 public class UserController {
 
     Map<Integer, User> users = new HashMap<>();
@@ -19,20 +24,22 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public User create(@RequestBody User user) {
-        Validator.checkUser(user);
+        checkUser(user);
         user.setId(++lastId);
         users.put(user.getId(), user);
+        log.info("Added user {}", user);
         return user;
     }
 
     @PutMapping(value = "/users")
     public User update(@RequestBody User user) {
         if (user.getId() == 0) {
-            throw new ValidationException("Id is not correct");
+            throw new UserValidationException("Id is not correct");
         } else if (!users.containsKey(user.getId())) {
-            throw new ValidationException("Id is not correct");
+            throw new UserValidationException("Id is not correct");
         }
-        Validator.checkUser(user);
+        checkUser(user);
+        log.info("Update user. New data {}", user);
         users.put(user.getId(), user);
         return user;
     }
