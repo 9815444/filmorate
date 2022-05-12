@@ -1,9 +1,10 @@
 package ru.yandex.practicum.filmorate.validators;
 
-import lombok.Data;
+import org.springframework.util.StringUtils;
 import ru.yandex.practicum.filmorate.exceptions.FilmValidationException;
 import ru.yandex.practicum.filmorate.exceptions.UserValidationException;
-import ru.yandex.practicum.filmorate.model.*;
+import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 
 public class Validator {
 
-    public static void checkUserEmail(String email) {
+    private static void checkUserEmail(String email) {
         try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
@@ -21,34 +22,34 @@ public class Validator {
         }
     }
 
-    public static void checkUserLogin(String login) {
-        if (login == null || login.isEmpty() || login.contains(" ")) {
+    private static void checkUserLogin(String login) {
+        if (!(StringUtils.hasLength(login))
+                || StringUtils.containsWhitespace(login)) {
             throw new UserValidationException("Login is not correct");
         }
     }
 
-    public static void checkUserName(User user) {
-        if (user.getName() == null || user.getName().isEmpty()) {
+    private static void checkUserName(User user) {
+        if (!(StringUtils.hasLength(user.getName()))) {
             user.setName(user.getLogin());
         }
     }
 
-    public static void checkFilmName(Film film) {
+    private static void checkFilmName(Film film) {
         String name = film.getName();
-        if (name == null
-                || name.isEmpty()) {
+        if (!StringUtils.hasLength(name)) {
             throw new FilmValidationException("Name of the film is not correct");
         }
     }
 
-    public static void checkFilmDescription(Film film) {
+    private static void checkFilmDescription(Film film) {
         String description = film.getDescription();
         if (description.length() > 200) {
             throw new FilmValidationException("Description the film is not correct");
         }
     }
 
-    public static void checkFilmReleaseDate(Film film) {
+    private static void checkFilmReleaseDate(Film film) {
         LocalDate releaseDate = film.getReleaseDate();
         if (releaseDate == null
                 || releaseDate.isBefore(LocalDate.of(1895, 12, 28))) {
@@ -56,14 +57,14 @@ public class Validator {
         }
     }
 
-    public static void checkFilmDuration(Film film) {
+    private static void checkFilmDuration(Film film) {
         Duration duration = film.getDuration();
         if (duration.toSeconds() < 0) {
             throw new FilmValidationException("Duration of the film cannot be negative");
         }
     }
 
-    public static void checkUserBirthday(User user) {
+    private static void checkUserBirthday(User user) {
         if (user.getBirthday() == null || user.getBirthday().isAfter(LocalDate.now())) {
             throw new UserValidationException("Birthday is not correct");
         }
@@ -83,25 +84,4 @@ public class Validator {
         checkFilmDuration(film);
     }
 
-//    public static boolean isValidLogin(String login) {
-//        boolean result = true;
-//        try {
-//            InternetAddress emailAddr = new InternetAddress(email);
-//            emailAddr.validate();
-//        } catch (AddressException ex) {
-//            result = false;
-//        }
-//        return result;
-//    }
-//
-//    public static boolean isValidEmailAddress(String email) {
-//        boolean result = true;
-//        try {
-//            InternetAddress emailAddr = new InternetAddress(email);
-//            emailAddr.validate();
-//        } catch (AddressException ex) {
-//            result = false;
-//        }
-//        return result;
-//    }
 }

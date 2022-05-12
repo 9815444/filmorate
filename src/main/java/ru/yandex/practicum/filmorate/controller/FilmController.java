@@ -20,8 +20,8 @@ import static ru.yandex.practicum.filmorate.validators.Validator.*;
 @Slf4j
 public class FilmController {
 
-    Map<Integer, Film> films = new HashMap<>();
-    int lastId = 0;
+    private Map<Integer, Film> films = new HashMap<>();
+    private int lastId = 0;
 
     @PostMapping(value = "/films")
     public Film create(@RequestBody Film film) {

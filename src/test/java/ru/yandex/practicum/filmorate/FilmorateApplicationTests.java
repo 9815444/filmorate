@@ -1,21 +1,15 @@
 package ru.yandex.practicum.filmorate;
 
-import com.google.gson.Gson;
-import org.apache.tomcat.jni.Local;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.exceptions.FilmValidationException;
 import ru.yandex.practicum.filmorate.exceptions.UserValidationException;
-import ru.yandex.practicum.filmorate.model.*;
-import ru.yandex.practicum.filmorate.validators.*;
+import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.validators.Validator;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.LocalDate;
 
@@ -178,7 +172,9 @@ class FilmorateApplicationTests {
             @Override
             public void execute() throws Throwable {
                 Validator.checkFilm(film);
-            };
+            }
+
+            ;
         });
 
         assertEquals("Name of the film is not correct", exception.getMessage());
@@ -231,7 +227,9 @@ class FilmorateApplicationTests {
             @Override
             public void execute() throws Throwable {
                 Validator.checkFilm(film);
-            };
+            }
+
+            ;
         });
 
         assertEquals("Description the film is not correct", exception.getMessage());
@@ -276,7 +274,9 @@ class FilmorateApplicationTests {
             @Override
             public void execute() throws Throwable {
                 Validator.checkFilm(film);
-            };
+            }
+
+            ;
         });
 
         assertEquals("Release date is not correct", exception.getMessage());
@@ -302,7 +302,9 @@ class FilmorateApplicationTests {
             @Override
             public void execute() throws Throwable {
                 Validator.checkFilm(film);
-            };
+            }
+
+            ;
         });
 
         assertEquals("Duration of the film cannot be negative", exception.getMessage());
