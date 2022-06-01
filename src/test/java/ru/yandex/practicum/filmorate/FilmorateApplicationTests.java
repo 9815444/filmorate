@@ -1,3 +1,4 @@
+
 package ru.yandex.practicum.filmorate;
 
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,7 @@ import ru.yandex.practicum.filmorate.exceptions.FilmValidationException;
 import ru.yandex.practicum.filmorate.exceptions.UserValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.validators.Validator;
+import ru.yandex.practicum.filmorate.service.Validator;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -159,7 +160,7 @@ class FilmorateApplicationTests {
         String name = "";
         String description = "description";
         LocalDate releaseDate = LocalDate.of(2000, 1, 1);
-        Duration duration = Duration.ofHours(1);
+        Integer duration = Math.toIntExact(Duration.ofHours(1).toSeconds());
 
         Film film = new Film();
         film.setId(1);
@@ -191,7 +192,7 @@ class FilmorateApplicationTests {
         }
 
         LocalDate releaseDate = LocalDate.of(2000, 1, 1);
-        Duration duration = Duration.ofHours(1);
+        Integer duration = 3600;
 
         Film film = new Film();
         film.setId(1);
@@ -214,7 +215,7 @@ class FilmorateApplicationTests {
         }
 
         LocalDate releaseDate = LocalDate.of(2000, 1, 1);
-        Duration duration = Duration.ofHours(1);
+        Integer duration = 3600;
 
         Film film = new Film();
         film.setId(1);
@@ -242,7 +243,7 @@ class FilmorateApplicationTests {
         String name = "name";
         String description = "description";
         LocalDate releaseDate = LocalDate.of(1895, 12, 28);
-        Duration duration = Duration.ofHours(1);
+        Integer duration = 3600;
 
         Film film = new Film();
         film.setId(1);
@@ -261,7 +262,7 @@ class FilmorateApplicationTests {
         String name = "name";
         String description = "description";
         LocalDate releaseDate = LocalDate.of(1895, 12, 27);
-        Duration duration = Duration.ofHours(1);
+        Integer duration = 3600;
 
         Film film = new Film();
         film.setId(1);
@@ -289,7 +290,7 @@ class FilmorateApplicationTests {
         String name = "name";
         String description = "description";
         LocalDate releaseDate = LocalDate.of(1895, 12, 29);
-        Duration duration = Duration.ofHours(-1);
+        Integer duration = -3600;
 
         Film film = new Film();
         film.setId(1);
@@ -317,7 +318,7 @@ class FilmorateApplicationTests {
         String name = "name";
         String description = "description";
         LocalDate releaseDate = LocalDate.of(1895, 12, 29);
-        Duration duration = Duration.ofHours(1);
+        Integer duration = 3600;
 
         Film film = new Film();
         film.setId(1);
@@ -326,9 +327,11 @@ class FilmorateApplicationTests {
         film.setReleaseDate(releaseDate);
         film.setDuration(duration);
 
+
         Validator.checkFilm(film);
 
     }
 
 
 }
+
