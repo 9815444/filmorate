@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.validators;
+package ru.yandex.practicum.filmorate.service;
 
 import org.springframework.util.StringUtils;
 import ru.yandex.practicum.filmorate.exceptions.FilmValidationException;
@@ -8,7 +8,6 @@ import ru.yandex.practicum.filmorate.model.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import java.time.Duration;
 import java.time.LocalDate;
 
 public class Validator {
@@ -58,8 +57,7 @@ public class Validator {
     }
 
     private static void checkFilmDuration(Film film) {
-        Duration duration = film.getDuration();
-        if (duration.toSeconds() < 0) {
+        if (film.getDuration() < 0) {
             throw new FilmValidationException("Duration of the film cannot be negative");
         }
     }
